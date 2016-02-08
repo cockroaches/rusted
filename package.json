@@ -18,9 +18,12 @@
   "homepage": "https://github.com/cockroaches/rusted#readme",
   "dependencies": {
     "bitstamp": "^0.2.0",
+    "body-parser": "^1.14.2",
+    "cookie-parser": "^1.4.1",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
     "mongoose": "^4.4.2",
     "nodemailer": "^2.1.0",
-    "q": "^1.4.1",
-    "restify": "^4.0.3"
+    "q": "^1.4.1"
   }
 }

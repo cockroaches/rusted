@@ -1,28 +1,24 @@
-var restify = require('restify');
-var fs = require('fs'); 
-var https = require('https');
-var http = require('http');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
 
 var Q = require('q');
 
 var Bitstamp = require('bitstamp');
-var bitstamp = new Bitstamp;
+var bitstamp = new Bitstamp();
 
 var server;
-server = restify.createServer({
-    name: 'rusted',
-    version: '0.1.0'
-});
-server.use(restify.queryParser());
-server.use(restify.bodyParser({ mapParams: false}));
-server.use(
-    function crossOrigin(req,res,next){
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Headers", "X-Requested-With");
-          return next();
-    }
-);
+server = express();
+
+server.set('views', path.join(__dirname, 'views'));
+server.set('view engine', 'ejs');
+
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: false }));
+server.use(cookieParser());
+server.use(express.static(path.join(__dirname, 'public')));
 
 var transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -33,7 +29,7 @@ var transporter = nodemailer.createTransport({
 });
 
 server.get('/', function (req, res, next) {
-    res.send('OK!!');
+    res.render('index');
 });
 
 server.post('/order', function (req, res) {
@@ -48,7 +44,7 @@ server.post('/order', function (req, res) {
         })
         .fail(function (err) {
             console.log(err);
-            return res.send(500, err.message);
+            return res.status(500).send(err.message);
         });
 });
 
@@ -59,7 +55,7 @@ server.get('/ticker', function (req, res) {
         })
         .fail(function (err) {
             console.log(err);
-            return res.send(500, err.message);
+            return res.status(500).send(err.message);
         });
 });
 
