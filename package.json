@@ -20,6 +20,7 @@
     "bitstamp": "^0.2.0",
     "mongoose": "^4.4.2",
     "nodemailer": "^2.1.0",
+    "q": "^1.4.1",
     "restify": "^4.0.3"
   }
 }
