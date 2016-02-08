@@ -5,13 +5,6 @@ var http = require('http');
 var nodemailer = require('nodemailer');
 
 var server;
-var UserInfo = mongoose.model('user_info', {
-    email: String,
-    datetime: Date,
-    name: String,
-    amount: String
-});
-
 server = restify.createServer({
     name: 'rusted',
     version: '0.1.0'
